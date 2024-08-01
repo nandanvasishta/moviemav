@@ -29,6 +29,7 @@ const ScrollAppBar = ({ children, window }) => {
     }
   });
 };
+
 const Topbar = () => {
   const { user } = useSelector((state) => state.user);
   const { appState } = useSelector((state) => state.appState);
@@ -44,6 +45,9 @@ const Topbar = () => {
   };
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  console.log("menuConfigs.main:", menuConfigs.main);
+  console.log("appState:", appState);
 
   return (
     <>
@@ -70,20 +74,23 @@ const Topbar = () => {
               <Box sx={{ marginRight: "30px" }}>
                 <Logo />
               </Box>
-              {menuConfigs.main.map((item, index) => (
-                <Button
-                  key={index}
-                  sx={{
-                    color: appState.includes(item.state) ? "primary.contrastText" : "inherit",
-                    mr: 2
-                  }}
-                  component={Link}
-                  to={item.path}
-                  variant={appState.includes(item.state) ? "contained" : "text"}
-                >
-                  {item.display}
-                </Button>
-              ))}
+              {menuConfigs.main.map((item, index) => {
+                console.log("Rendering menu item:", item);
+                return (
+                  <Button
+                    key={index}
+                    sx={{
+                      color: appState.includes(item.state) ? "primary.contrastText" : "inherit",
+                      mr: 2
+                    }}
+                    component={Link}
+                    to={item.path}
+                    variant={appState.includes(item.state) ? "contained" : "text"}
+                  >
+                    {item.display}
+                  </Button>
+                );
+              })}
               <IconButton
                 sx={{ color: "inherit" }}
                 onClick={onSwithTheme}
